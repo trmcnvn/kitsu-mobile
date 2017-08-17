@@ -60,7 +60,7 @@ export const getUserFeed = (userId, cursor, limit = 10) => async (dispatch, getS
     const posts = results
       .sort(item => item.activities[0].verb === 'post')
       .map(item => item.activities[0].subject.id);
-    console.log(posts);
+    console.log('getUserFeed', posts, results);
     const postLikes = await Kitsu.findAll('postLikes', {
       fields: {
         users: 'avatar,name',
@@ -72,6 +72,7 @@ export const getUserFeed = (userId, cursor, limit = 10) => async (dispatch, getS
       include: 'user,post',
       page: { limit: 4 },
     });
+    console.log('getUserFeed post likes', postLikes);
     const likesMap = postLikes.reduce((acc, item) => {
       const curr = acc[item.post.id] || [];
       acc[item.post.id] = [...curr, ...item.user];

@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchUserFeed } from '../../actions';
+import { getUserFeed } from '../../store/feed/actions';
 
 class Feed extends React.Component {
+  static navigationOptions = {
+    title: 'Feed',
+  };
+
   componentDidMount() {
-    console.log('test', this.props.fetchUserFeed());
+    this.props.getUserFeed();
   }
 
   render() {
@@ -13,4 +17,4 @@ class Feed extends React.Component {
   }
 }
 
-export default connect(() => ({}), { fetchUserFeed })(Feed);
+export default connect(() => ({}), { getUserFeed })(Feed);

@@ -3,6 +3,7 @@ import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import HomeScreen from '../screens/HomeScreen';
+import FeedScreen from '../screens/Feed';
 import SearchStack from './search';
 import NotifStack from './notification';
 import ProfileStack from './profile';
@@ -22,9 +23,9 @@ const Tabs = TabNavigator(
     Profile: {
       screen: ProfileStack,
     },
-    // Feed: {
-    //   screen: HomeScreen,
-    // },
+    Feed: {
+      screen: FeedScreen,
+    },
     Notif: {
       screen: NotifStack,
     },

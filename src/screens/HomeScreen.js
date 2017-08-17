@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Spinner, Button, Container, Content, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 
+import FeedItem from './Feed/FeedItem';
 import { logoutUser } from '../store/auth/actions';
 
 class HomeScreen extends Component {
@@ -27,7 +28,8 @@ class HomeScreen extends Component {
     const { currentUser, navigation, loading } = this.props;
     return (
       <Container>
-        <Content style={{ padding: 50 }}>
+        <Content style={{ paddingTop: 60 }}>
+          <FeedItem />
           {loading
             ? <Spinner size="large" />
             : <View style={{ flex: 1 }}>
