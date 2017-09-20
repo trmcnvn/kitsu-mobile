@@ -42,7 +42,6 @@ const ResultsList = ({ hits, onPress, ...props }) => (
     contentContainerStyle={styles.list}
     renderItem={e => renderItem(e, onPress)}
     style={styles.container}
-    onEndReachedThreshold={0.5}
     {...props}
   />
 );

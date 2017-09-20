@@ -27,9 +27,9 @@ class SearchScreen extends Component {
       users: undefined,
     },
     searchResults: {
-      anime: [],
-      manga: [],
-      users: [],
+      anime: { hits: [] },
+      manga: { hits: [] },
+      users: { hits: [] },
     },
     index: 0,
     routes: [
@@ -54,22 +54,30 @@ class SearchScreen extends Component {
     ],
   };
 
-  doSearch = (query, route) => {
+  componentDidUpdate() {
+    console.log('updated state', this.state);
+  }
+
+  doSearch = (route) => {
+    console.log('searching....', route);
     const algoliaClient = algolia(kitsuConfig.algoliaAppId, route.apiKey);
     const algoliaIndex = algoliaClient.initIndex(route.indexName);
-
-    algoliaIndex.search(query, (err, content) => {
-      if (!err) {
-        this.setState({ searchResults: { [route.key]: content.hits } });
-      }
-    });
+    const searchResult = this.state.searchResults[route.key];
+    const query = this.state.query[route.key];
+    algoliaIndex.search(
+      { query, page: searchResult.page ? searchResult.page + 1 : 0 },
+      (err, content) => {
+        if (!err) {
+          this.setState({ searchResults: { ...this.state.searchResults, [route.key]: content } });
+        }
+      },
+    );
   };
 
   handleSearchStateChange = (route, query) => {
-    // const { query } = searchState;
     const nextQueryState = { ...this.state.query, [route.key]: query !== '' ? query : undefined };
     this.setState({ query: nextQueryState }, () => {
-      this.doSearch(query, route);
+      this.doSearch(route);
     });
   };
 
@@ -109,14 +117,22 @@ class SearchScreen extends Component {
     const { navigation, followUser, captureUsersData } = this.props;
 
     const activeQuery = query[route.key];
-    const hits = this.state.searchResults[route.key];
+    const searchResults = this.state.searchResults[route.key];
+
     switch (route.key) {
       case 'users': {
-        return <UsersList hits={hits} onFollow={followUser} onData={captureUsersData} />;
+        return (
+          <UsersList hits={searchResults.hits} onFollow={followUser} onData={captureUsersData} />
+        );
       }
       default: {
         return activeQuery ? (
-          <ResultsList hits={hits} onPress={this.navigateToMedia} />
+          <ResultsList
+            hits={searchResults.hits}
+            onPress={this.navigateToMedia}
+            onEndReachedThreshold={1}
+            onEndReached={() => this.doSearch(route)}
+          />
         ) : (
           <TopsList active={route.key} mounted navigation={navigation} />
         );
