@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, ScrollView, Dimensions } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { slide1, slide2, slide3, slide4 } from 'kitsu/assets/img/intro/';
 import { Button } from 'kitsu/components/Button';
 import { IntroHeader } from './common/';
 import styles from './styles';
 import Step from './Step';
-import Dot from './Dot';
 
-const INTROS = [
+const CAROUSEL_ITEMS = [
   {
     title: 'More of what you love',
     desc: 'Get recommendations to discover your next favorite anime or manga!',
@@ -28,40 +28,37 @@ const INTROS = [
     desc: 'Check the media ratings and reviews from other users and leave your own!',
     image: slide4,
   },
-  // dummy view for smooth transition. Removing this and adding an additional dot instead looks bad when swipe bounces back.
+  // dummy view for smooth transition.
   {
     title: '',
     desc: '',
     image: null,
-  },
+  }
 ];
+const CAROUSEL_WIDTH = Dimensions.get('window').width;
 
-export default class OnboardingScreen extends React.Component {
+export default class OnboardingScreen extends Component {
   static navigationOptions = {
     header: null,
   };
 
   state = {
-    step: 0,
+    currentIndex: 0
   };
-  navigating = false;
+  isNavigating = false;
 
-  handleScroll = ({ nativeEvent: { contentOffset: { x } } }) => {
-    const SCREEN_WIDTH = Dimensions.get('window').width;
-    const position = x / SCREEN_WIDTH;
-    if (!this.navigating && position > INTROS.length - 2 + 0.05) {
+  onScroll = (event) => {
+    const { contentOffset } = event.nativeEvent;
+    const position = contentOffset.x / CAROUSEL_WIDTH;
+    if (!this.isNavigating && position > (CAROUSEL_ITEMS.length - 2 + 0.05)) {
       this.props.navigation.navigate('Registration');
-      this.navigating = true; // prevent triggering navigate twice.
-    } else {
-      // abs for -x direction values: prevent -1 value for step
-      this.setState({ step: Math.floor(Math.abs(x) / SCREEN_WIDTH) });
+      this.isNavigating = true; // prevent triggering twice.
     }
-  };
+  }
 
-  renderStep = () => INTROS.map((item, index) => <Step key={`step-${index}`} {...item} />);
-
-  renderDots = () =>
-    INTROS.map((_, index) => <Dot key={`dot-${index}`} active={index === this.state.step} />);
+  renderItem = ({ item }) => (
+    <Step {...item} />
+  )
 
   render() {
     const { navigate } = this.props.navigation;
@@ -71,19 +68,25 @@ export default class OnboardingScreen extends React.Component {
         <IntroHeader style={styles.header} />
         <View style={styles.bodyWrapper}>
           <View style={styles.page}>
-            <ScrollView
-              pagingEnabled
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              alwaysBounceHorizontal={false}
-              onScroll={this.handleScroll}
-              scrollEventThrottle={300} // decrease for precision, lower values trigger onScroll more.
-            >
-              {this.renderStep()}
-            </ScrollView>
+            <Carousel
+              data={CAROUSEL_ITEMS}
+              renderItem={this.renderItem}
+              itemWidth={CAROUSEL_WIDTH}
+              sliderWidth={CAROUSEL_WIDTH}
+              onSnapToItem={index => this.setState({ currentIndex: index })}
+              onScroll={this.onScroll}
+            />
           </View>
           <View style={styles.buttonsWrapper}>
-            <View style={styles.dotContainer}>{this.renderDots()}</View>
+            <Pagination
+              dotsLength={CAROUSEL_ITEMS.length}
+              activeDotIndex={this.state.currentIndex}
+              containerStyle={styles.dotContainer}
+              dotContainerStyle={{ marginHorizontal: 3 }}
+              dotStyle={styles.stepDotActive}
+              inactiveDotStyle={styles.stepDot}
+              inactiveDotScale={0.8}
+            />
             <Button
               style={styles.getStartedButton}
               title={'Get Started'}
