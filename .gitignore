@@ -55,6 +55,8 @@ ios/kitsu_mobile.app.dSYM.zip
 ios/fastlane/report.xml
 android/fastlane/report.xml
 
+# Bundle artifact
+*.jsbundle
 
 # editor
 .vscode

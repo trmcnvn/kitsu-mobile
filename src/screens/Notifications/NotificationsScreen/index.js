@@ -58,7 +58,6 @@ class NotificationsScreen extends PureComponent {
   componentWillMount() {
     // Register all global app events here
     OneSignal.addEventListener('ids', this.onIds);
-    OneSignal.addEventListener('registered', this.onPNRegistered);
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
 
@@ -103,7 +102,6 @@ class NotificationsScreen extends PureComponent {
 
   componentWillUnmount() {
     OneSignal.removeEventListener('ids', this.onIds);
-    OneSignal.removeEventListener('registered', this.onPNRegistered);
     OneSignal.removeEventListener('received', this.onReceived);
     OneSignal.removeEventListener('opened', this.onOpened);
     this.unsubscribeNotificationPress();
@@ -121,10 +119,6 @@ class NotificationsScreen extends PureComponent {
     console.log(device.userId);
     store.dispatch({ type: types.ONESIGNAL_ID_RECEIVED, payload: device.userId });
   }
-
-  onPNRegistered = (notificationData) => {
-    console.log('device registered', notificationData);
-  };
 
   onReceived = (notification) => {
     console.log('Notification received: ', notification);

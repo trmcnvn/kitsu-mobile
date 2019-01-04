@@ -1,19 +1,25 @@
 {
-  "presets": ["react-native"],
+  "presets": [
+    "module:metro-react-native-babel-preset"
+  ],
   "plugins": [
     [
-      "module-alias",
-      [
-        {
-          "src": "./src",
-          "expose": "kitsu"
-        },
-      ]
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "kitsu": "./src"
+        }
+      }
     ]
   ],
   "env": {
     "production": {
-      "plugins": ["transform-remove-console"]
+      "plugins": [
+        "transform-remove-console"
+      ]
     }
   }
 }

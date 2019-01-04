@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
-      "kitsu/*": ["src/*"]
+      "kitsu/*": [
+        "src/*"
+      ]
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
