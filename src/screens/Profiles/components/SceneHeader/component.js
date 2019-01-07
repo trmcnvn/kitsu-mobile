@@ -155,7 +155,7 @@ export class SceneHeader extends PureComponent {
             >
               <StyledProgressiveImage
                 variant={variant}
-                resize="cover"
+                resizeMode="cover"
                 source={{ uri: posterImage || defaultAvatar }}
                 borderRadius={variant === 'profile' ? cardSize.square.width : 6}
               />

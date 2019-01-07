@@ -25,7 +25,7 @@ export const Avatar = ({ size, avatar }) => (
     ]}
   >
     <StyledProgressiveImage
-      resize="cover"
+      resizeMode="cover"
       source={{ uri: avatar || defaultAvatar }}
       borderRadius={avatarSizes[size]}
     />

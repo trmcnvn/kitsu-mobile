@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Platform } from 'react-native';
 import { ProgressiveImage } from 'kitsu/components/ProgressiveImage';
 
-export const StyledProgressiveImage = props => (
+export const StyledProgressiveImage = React.memo(props => (
   <ProgressiveImage
     style={{
       width: '100%',
@@ -12,7 +11,7 @@ export const StyledProgressiveImage = props => (
     }}
     {...props}
   />
-);
+));
 
 StyledProgressiveImage.propTypes = {
   borderRadius: PropTypes.number,

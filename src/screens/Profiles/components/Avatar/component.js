@@ -8,7 +8,7 @@ import { styles } from './styles';
 export const Avatar = ({ avatar }) => (
   <View style={styles.wrap}>
     <StyledProgressiveImage
-      resize="cover"
+      resizeMode="cover"
       source={{ uri: avatar || defaultAvatar }}
     />
   </View>

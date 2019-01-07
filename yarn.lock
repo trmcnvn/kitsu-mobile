@@ -6235,10 +6235,9 @@ react-native-deep-linking@2.1.0:
   resolved "https://registry.yarnpkg.com/react-native-deep-linking/-/react-native-deep-linking-2.1.0.tgz#fcba2f5265fa1e218738e3af4102125158f0686d"
   integrity sha1-/LovUmX6HiGHOOOvQQISUVjwaG0=
 
-react-native-fast-image@5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-5.1.2.tgz#c9b909993e9304736c3d9806df80f7a9705ef829"
-  integrity sha512-NZsuW36I4fqnlOuxh0ZY31Q7wGWSqZMOC0wtp7ZcSG2dmjXSFaSFTdxX2vJx4Dhm0tMT3qG4yrn2ob3BiZEudA==
+react-native-fast-image@hummingbird-me/react-native-fast-image#webp:
+  version "0.0.0-development"
+  resolved "https://codeload.github.com/hummingbird-me/react-native-fast-image/tar.gz/d732b5ea9f8c011479a59645f3a563e210854b45"
 
 react-native-fbsdk@0.8.0:
   version "0.8.0"

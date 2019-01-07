@@ -1,7 +1,7 @@
 PODS:
-  - Google-Mobile-Ads-SDK (7.29.0)
+  - Google-Mobile-Ads-SDK (7.31.0)
   - QBImagePickerController (3.4.0)
-  - RSKImageCropper (2.0.0)
+  - RSKImageCropper (2.1.0)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
@@ -15,10 +15,10 @@ SPEC REPOS:
     - RSKImageCropper
 
 SPEC CHECKSUMS:
-  Google-Mobile-Ads-SDK: 375bbb821b3df2106c37b74f6b0a97576ddc5f6b
+  Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
-  RSKImageCropper: d9a1acbc0600bf8decc8f0d21895872c99a9e4cf
+  RSKImageCropper: 0d0c6d8525a2381f03fde32a47c6703817a2feed
 
-PODFILE CHECKSUM: 37945ddf970518caaf601c510c923862cf4aaa85
+PODFILE CHECKSUM: 6222dcecebf24dd37c94dbc5c92474a4142774a1
 
 COCOAPODS: 1.5.3
