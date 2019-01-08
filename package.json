@@ -15,6 +15,7 @@
     "@ptomasroos/react-native-multi-slider": "1.0.0",
     "algoliasearch": "3.32.0",
     "client-oauth2": "hummingbird-me/js-client-oauth2",
+    "d3-shape": "^1.2.2",
     "devour-client": "^1.4.3",
     "entities": "1.1.2",
     "getstream": "4.0.9",
