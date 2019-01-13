@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, View, StyleSheet, Platform, Dimensions, Linking } from 'react-native';
+import { StatusBar, View, StyleSheet, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import { AdMobBanner } from 'react-native-admob';
@@ -82,9 +82,9 @@ class Feed extends React.PureComponent {
         },
       },
     });
-  }
+  };
 
-  setActiveFeed = (activeFeed) => {
+  setActiveFeed = activeFeed => {
     this.setState(
       {
         activeFeed,
@@ -178,14 +178,14 @@ class Feed extends React.PureComponent {
     }
   };
 
-  navigateToPost = (props) => {
+  navigateToPost = props => {
     Navigation.push(this.props.componentId, {
       component: {
         name: Screens.FEED_POST_DETAILS,
         passProps: props,
       },
     });
-  }
+  };
 
   navigateToCreatePost = () => {
     if (this.props.currentUser) {
@@ -195,7 +195,7 @@ class Feed extends React.PureComponent {
     }
   };
 
-  navigateToUserProfile = (userId) => {
+  navigateToUserProfile = userId => {
     Navigation.push(this.props.componentId, {
       component: {
         name: Screens.PROFILE_PAGE,
@@ -215,7 +215,7 @@ class Feed extends React.PureComponent {
 
   keyExtractor = (item, index) => {
     return `${item.id}-${item.updatedAt}`;
-  }
+  };
 
   renderPost = ({ item, index }) => {
     // This dispatches based on the type of an entity to the correct
@@ -231,18 +231,17 @@ class Feed extends React.PureComponent {
               componentId={this.props.componentId}
             />
             {/* Render a AdMobBanner every 3 posts */}
-            {!isAoProOrKitsuPro(this.props.currentUser) &&
-              ((index + 1) % 3 === 0) && (
-                <React.Fragment>
-                  <View style={{ marginTop: 10 }} />
-                  <AdMobBanner
-                    adUnitID={ADMOB_AD_UNITS[Platform.OS]}
-                    adSize="smartBannerPortrait"
-                    testDevices={[AdMobBanner.simulatorId]}
-                    onAdFailedToLoad={error => console.log(error)}
-                  />
-                </React.Fragment>
-              )}
+            {!isAoProOrKitsuPro(this.props.currentUser) && (index + 1) % 3 === 0 && (
+              <React.Fragment>
+                <View style={{ marginTop: 10 }} />
+                <AdMobBanner
+                  adUnitID={ADMOB_AD_UNITS[Platform.OS]}
+                  adSize="smartBannerPortrait"
+                  testDevices={[AdMobBanner.simulatorId]}
+                  onAdFailedToLoad={error => console.log(error)}
+                />
+              </React.Fragment>
+            )}
           </React.Fragment>
         );
       default:
@@ -285,10 +284,7 @@ class Feed extends React.PureComponent {
             }}
             onEndReachedThreshold={0.6}
             ListHeaderComponent={<CreatePostRow onPress={this.navigateToCreatePost} />}
-            ListFooterComponent={() => this.state.isLoadingNextPage && (
-              <SceneLoader color={offWhite} />
-            )}
-
+            ListFooterComponent={() => this.state.isLoadingNextPage && <SceneLoader color={offWhite} />}
             /*
               Disable this on iOS if we start to get missing content
               We could also improve performance by setting `windowSize` prop (default is 21, 10 views above and 10 views below)

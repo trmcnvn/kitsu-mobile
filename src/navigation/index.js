@@ -8,13 +8,15 @@ import * as NavigationActions from './actions';
 const majorVersionIOS = Platform.OS === 'ios' ? parseInt(Platform.Version, 10) : 0;
 
 // Setting badgeColor on iOS 9 causes crash
-const badgeColor = (Platform.OS === 'android' || majorVersionIOS >= 10) ? {
-  badgeColor: tabRed,
-} : {};
-
+const badgeColor =
+  Platform.OS === 'android' || majorVersionIOS >= 10
+    ? {
+        badgeColor: tabRed,
+      }
+    : {};
 
 // Default styling options
-// https://wix.github.io/react-native-navigation/v2/#/docs/styling
+// https://wix.github.io/react-native-navigation/#/docs/styling
 // https://github.com/wix/react-native-navigation/issues/3694
 export const defaultOptions = {
   sideMenu: {
@@ -31,10 +33,12 @@ export const defaultOptions = {
     // By Default we set the bar to not visible
     // This is because there are many components where we use a custom navigation bar
     visible: false,
+    height: 0,
     background: {
       color: listBackPurple,
     },
-    backButton: { // android
+    backButton: {
+      // android
       color: 'white',
     },
     buttonColor: 'white', // iOS
@@ -51,7 +55,8 @@ export const defaultOptions = {
     textColor: tabInactive,
     selectedTextColor: tabRed,
     selectedIconColor: tabRed,
-    iconInsets: { // This is for iOS
+    iconInsets: {
+      // This is for iOS
       top: 6,
       bottom: -6,
       right: 0,

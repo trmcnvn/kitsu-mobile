@@ -1,29 +1,22 @@
 import React, { PureComponent } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Platform,
-  PushNotificationIOS,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Platform, PushNotificationIOS } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 import OneSignal from 'react-native-onesignal';
 import moment from 'moment';
-import {
-  fetchNotifications,
-  markNotifications,
-  markAllNotificationsAsRead,
-} from 'kitsu/store/feed/actions';
+import { fetchNotifications, markNotifications, markAllNotificationsAsRead } from 'kitsu/store/feed/actions';
 import { Navigation } from 'react-native-navigation';
 import { Screens } from 'kitsu/navigation';
 import store from 'kitsu/store/config';
 import * as types from 'kitsu/store/types';
 import { isEqual, isEmpty } from 'lodash';
-import { parseNotificationData, handleNotificationPress, handleOneSignalNotificationData } from 'kitsu/utils/notifications';
+import {
+  parseNotificationData,
+  handleNotificationPress,
+  handleOneSignalNotificationData,
+} from 'kitsu/utils/notifications';
 import { EventBus } from 'kitsu/utils/eventBus';
 import { NotificationHeader } from 'kitsu/screens/Notifications/NotificationHeader';
 import { styles } from './styles';
@@ -62,7 +55,7 @@ class NotificationsScreen extends PureComponent {
     OneSignal.addEventListener('opened', this.onOpened);
 
     // Event for handling notification press from `NotificationOverlay`
-    this.unsubscribeNotificationPress = EventBus.subscribe(NOTIFICATION_PRESSED_EVENT, (notification) => {
+    this.unsubscribeNotificationPress = EventBus.subscribe(NOTIFICATION_PRESSED_EVENT, notification => {
       // Navigate to notification tab
       Navigation.mergeOptions(Screens.BOTTOM_TABS, {
         bottomTabs: {
@@ -81,7 +74,9 @@ class NotificationsScreen extends PureComponent {
 
   componentDidMount() {
     // for once, and listener will invoke afterwards.
-    OneSignal.requestPermissions({ alert: true, sound: true, badge: true });
+    if (Platform.OS === 'ios') {
+      OneSignal.requestPermissions({ alert: true, sound: true, badge: true });
+    }
 
     // Setup notification intervals
     this.fetchNotifications();
@@ -113,14 +108,14 @@ class NotificationsScreen extends PureComponent {
     if (unselectedTabIndex === 3) {
       Navigation.popToRoot(this.props.componentId);
     }
-  }
+  };
 
-  onIds = (device) => {
+  onIds = device => {
     console.log(device.userId);
     store.dispatch({ type: types.ONESIGNAL_ID_RECEIVED, payload: device.userId });
-  }
+  };
 
-  onReceived = (notification) => {
+  onReceived = notification => {
     console.log('Notification received: ', notification);
 
     // If we got a notification while user is in the app then dismiss it
@@ -129,9 +124,9 @@ class NotificationsScreen extends PureComponent {
     }
 
     this.updateNotificationCount();
-  }
+  };
 
-  onOpened = async (openResult) => {
+  onOpened = async openResult => {
     console.group('Opened Notification');
     console.log('Notification', openResult.notification);
     console.log('Message: ', openResult.notification.payload.body);
@@ -158,7 +153,7 @@ class NotificationsScreen extends PureComponent {
 
     // Fetch the actual notification
     this.fetchNotifications();
-  }
+  };
 
   /**
    * Marks all notifications as read, currently triggered from NotificationHeader.
@@ -174,11 +169,10 @@ class NotificationsScreen extends PureComponent {
    *
    * @param {Object} notification The notification row data
    */
-  onNotificationPressed = async (notification) => {
+  onNotificationPressed = async notification => {
     await handleNotificationPress(this.props.componentId, notification);
     this.updateNotificationCount();
   };
-
 
   /**
    * Fetches notifications and immediately marks them as read.
@@ -210,11 +204,14 @@ class NotificationsScreen extends PureComponent {
   markNotifications = async (notifications, type) => {
     await this.props.markNotifications(notifications, type);
     this.updateNotificationCount();
-  }
+  };
 
   updateNotificationCount = (props = this.props) => {
     const { notifications } = props;
-    const unreadCount = notifications.reduce((count, notification) => count + ((notification && !notification.isRead) ? 1 : 0), 0);
+    const unreadCount = notifications.reduce(
+      (count, notification) => count + (notification && !notification.isRead ? 1 : 0),
+      0,
+    );
     const badge = unreadCount > 0 ? `${unreadCount}` : '';
 
     // Set the state and the badges
@@ -224,11 +221,11 @@ class NotificationsScreen extends PureComponent {
         badge,
       },
     });
-  }
+  };
 
   resetScrollPosition = () => {
     this.list.scrollToOffset({ x: 0, y: 0, animated: true });
-  }
+  };
 
   handleActionBtnPress = () => {
     if (Platform.OS === 'ios') {
@@ -237,15 +234,15 @@ class NotificationsScreen extends PureComponent {
   };
 
   renderItem = ({ item }) => {
-    const { currentUser: { id } } = this.props;
+    const {
+      currentUser: { id },
+    } = this.props;
     const data = parseNotificationData(item.activities, id);
     const activity = item.activities[0];
     const time = (activity && activity.time && moment(activity.time).fromNow()) || '-';
 
     return (
-      <TouchableOpacity
-        onPress={() => this.onNotificationPressed(item)}
-      >
+      <TouchableOpacity onPress={() => this.onNotificationPressed(item)}>
         <View style={[styles.parentItem, { opacity: item.isRead ? 0.7 : 1 }]}>
           <View style={styles.iconContainer}>
             <Icon name="circle" style={[styles.icon, !item.isRead && styles.iconUnread]} />
@@ -257,9 +254,7 @@ class NotificationsScreen extends PureComponent {
             <View style={styles.activityContainer}>
               <View style={styles.activityTextContainer}>
                 <Text style={[styles.activityText, { flex: 1 }]}>
-                  <Text style={[styles.activityText, styles.activityTextHighlight]}>
-                    {data.actorName}{' '}
-                  </Text>
+                  <Text style={[styles.activityText, styles.activityTextHighlight]}>{data.actorName} </Text>
                   {!isEmpty(data.others) && <Text>and {data.others} </Text>}
                   <Text>{data.text}</Text>
                 </Text>
@@ -277,7 +272,8 @@ class NotificationsScreen extends PureComponent {
   renderItemSeperator = () => <View style={styles.itemSeperator} />;
 
   renderHeader = () => {
-    if (!this.props.pushNotificationEnabled) {
+    // We can only request permissions on the iOS platform.
+    if (!this.props.pushNotificationEnabled && Platform.OS === 'ios') {
       return (
         <View style={styles.noticeContainer}>
           <Text style={styles.noticeText}>Kitsu is better with notifications!</Text>
@@ -296,13 +292,11 @@ class NotificationsScreen extends PureComponent {
     const { unreadCount, loadingOneSignalNotification } = this.state;
     return (
       <View style={styles.container}>
-        <NotificationHeader
-          markingRead={markingRead}
-          unreadCount={unreadCount}
-          onMarkAll={this.onMarkAll}
-        />
+        <NotificationHeader markingRead={markingRead} unreadCount={unreadCount} onMarkAll={this.onMarkAll} />
         <FlatList
-          ref={(r) => { this.list = r; }}
+          ref={r => {
+            this.list = r;
+          }}
           ListHeaderComponent={this.renderHeader}
           data={notifications}
           renderItem={this.renderItem}
@@ -341,8 +335,11 @@ const mapStateToProps = ({ feed, user, app }) => {
     markingRead,
   };
 };
-export default connect(mapStateToProps, {
-  fetchNotifications,
-  markAllNotificationsAsRead,
-  markNotifications,
-})(NotificationsScreen);
+export default connect(
+  mapStateToProps,
+  {
+    fetchNotifications,
+    markAllNotificationsAsRead,
+    markNotifications,
+  },
+)(NotificationsScreen);
