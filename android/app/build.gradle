@@ -1,21 +1,21 @@
 buildscript {
   repositories {
-    maven { url 'https://maven.fabric.io/public' }
-    maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
+    maven { url "https://maven.fabric.io/public" }
+    maven { url "https://plugins.gradle.org/m2/" } // Gradle Plugin Portal
   }
 
   dependencies {
-    classpath 'io.fabric.tools:gradle:1.+'
-    classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]'
+    classpath "io.fabric.tools:gradle:1.+"
+    classpath "gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]"
   }
 }
 
 apply plugin: "com.android.application"
-apply plugin: 'io.fabric'
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+apply plugin: "io.fabric"
+apply plugin: "com.onesignal.androidsdk.onesignal-gradle-plugin"
 
 repositories {
-  maven { url 'https://maven.fabric.io/public' }
+  maven { url "https://maven.fabric.io/public" }
 }
 
 import com.android.build.OutputFile
@@ -45,8 +45,8 @@ import com.android.build.OutputFile
  *   // whether to bundle JS and assets in another build variant (if configured).
  *   // See http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Build-Variants
  *   // The configuration property can be in the following formats
- *   //         'bundleIn${productFlavor}${buildType}'
- *   //         'bundleIn${buildType}'
+ *   //         "bundleIn${productFlavor}${buildType}"
+ *   //         "bundleIn${buildType}"
  *   // bundleInFreeDebug: true,
  *   // bundleInPaidRelease: true,
  *   // bundleInBeta: true,
@@ -61,15 +61,15 @@ import com.android.build.OutputFile
  *   jsBundleDirRelease: "$buildDir/intermediates/assets/release",
  *
  *   // where to put drawable resources / React Native assets, e.g. the ones you use via
- *   // require('./image.png')), in debug mode
+ *   // require("./image.png")), in debug mode
  *   resourcesDirDebug: "$buildDir/intermediates/res/merged/debug",
  *
  *   // where to put drawable resources / React Native assets, e.g. the ones you use via
- *   // require('./image.png')), in release mode
+ *   // require("./image.png")), in release mode
  *   resourcesDirRelease: "$buildDir/intermediates/res/merged/release",
  *
  *   // by default the gradle tasks are skipped if none of the JS files or assets change; this means
- *   // that we don't look at files in android/ or ios/ to determine whether the tasks are up to
+ *   // that we don"t look at files in android/ or ios/ to determine whether the tasks are up to
  *   // date; if you have any other folders that you want to ignore for performance reasons (gradle
  *   // indexes the entire tree), add them here. Alternatively, if you have JS files in android/
  *   // for example, you might want to remove it from here.
@@ -140,7 +140,7 @@ android {
     }
     signingConfigs {
         release {
-            if (project.hasProperty('KITSU_RELEASE_STORE_FILE')) {
+            if (project.hasProperty("KITSU_RELEASE_STORE_FILE")) {
                 storeFile file(KITSU_RELEASE_STORE_FILE)
                 storePassword KITSU_RELEASE_STORE_PASSWORD
                 keyAlias KITSU_RELEASE_KEY_ALIAS
@@ -173,8 +173,8 @@ android {
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
         def requested = details.requested
-        if (requested.group == 'com.android.support' && requested.name != 'multidex' && requested.name != 'multidex-instrumentation') {
-            details.useVersion rootProject.ext.buildToolsVersion
+        if (requested.group == "com.android.support" && !requested.name.contains("multidex")) {
+            details.useVersion rootProject.ext.supportLibVersion
         }
     }
 }
@@ -184,24 +184,24 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    implementation project(':react-native-navigation')
-    implementation (project(':react-native-admob')) {
-        exclude group: 'com.google.android.gms', module: 'play-services-ads'
+    implementation project(":react-native-navigation")
+    implementation (project(":react-native-admob")) {
+        exclude group: "com.google.android.gms", module: "play-services-ads"
     }
-    implementation project(':react-native-sentry')
-    implementation project(':react-native-android-fullscreen-webview')
-    implementation project(':react-native-fast-image')
-    implementation project(':react-native-image-crop-picker')
-    implementation project(':react-native-onesignal')
-    implementation project(':react-native-youtube')
-    implementation project(':react-native-linear-gradient')
-    implementation project(':react-native-fbsdk')
-    implementation project(':react-native-vector-icons')
-    implementation project(':react-native-code-push')
+    implementation project(":react-native-sentry")
+    implementation project(":react-native-android-fullscreen-webview")
+    implementation project(":react-native-fast-image")
+    implementation project(":react-native-image-crop-picker")
+    implementation project(":react-native-onesignal")
+    implementation project(":react-native-youtube")
+    implementation project(":react-native-linear-gradient")
+    implementation project(":react-native-fbsdk")
+    implementation project(":react-native-vector-icons")
+    implementation project(":react-native-code-push")
 
-    implementation 'com.google.android.gms:play-services-ads:16.0.0'
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation ('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
+    implementation "com.google.android.gms:play-services-ads:16.0.0"
+    implementation "com.android.support:multidex:1.0.3"
+    implementation ("com.crashlytics.sdk.android:crashlytics:2.9.3@aar") {
         transitive = true;
     }
 }
@@ -210,5 +210,5 @@ dependencies {
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
-    into 'libs'
+    into "libs"
 }

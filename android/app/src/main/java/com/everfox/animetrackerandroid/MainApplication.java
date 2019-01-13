@@ -86,7 +86,7 @@ public class MainApplication extends NavigationApplication  {
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
           new RNAdMobPackage(),
-          new RNSentryPackage(MainApplication.this),
+          new RNSentryPackage(),
           new CustomWebViewPackage(),
           new FastImageViewPackage(),
           new PickerPackage(),

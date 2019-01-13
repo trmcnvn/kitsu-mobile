@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "27.1.0"
+        buildToolsVersion = "27.0.3"
         minSdkVersion = 19
         compileSdkVersion = 27
         targetSdkVersion = 27
@@ -15,7 +15,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath "com.android.tools.build:gradle:3.1.4"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -36,16 +36,15 @@ allprojects {
 
         configurations.all {
             resolutionStrategy {
-                force 'com.facebook.android:facebook-android-sdk:4.28.0' // Temp fix for broken run-android (see goo.gl/v8u59r)
+                force "com.facebook.android:facebook-android-sdk:4.28.0" // Temp fix for broken run-android (see goo.gl/v8u59r)
             }
         }
     }
 }
 
-// @TODO: ??
 subprojects { subproject ->
     afterEvaluate {
-        if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+        if ((subproject.plugins.hasPlugin("android") || subproject.plugins.hasPlugin("android-library"))) {
             android {
                 variantFilter { variant ->
                     def names = variant.flavors*.name
@@ -59,6 +58,6 @@ subprojects { subproject ->
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+    gradleVersion = "4.4"
     distributionUrl = distributionUrl.replace("bin", "all")
 }
