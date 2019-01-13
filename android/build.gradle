@@ -34,7 +34,6 @@ allprojects {
         }
         maven { url "https://jitpack.io" } // jitpack repo is necessary to fetch ucrop dependency
 
-        // @TODO: ??
         configurations.all {
             resolutionStrategy {
                 force 'com.facebook.android:facebook-android-sdk:4.28.0' // Temp fix for broken run-android (see goo.gl/v8u59r)
@@ -50,7 +49,7 @@ subprojects { subproject ->
             android {
                 variantFilter { variant ->
                     def names = variant.flavors*.name
-                    if (names.contains("reactNative56") || names.contains("reactNative55")) {
+                    if (names.contains("reactNative56") || names.contains("reactNative55") || names.contains("reactNative56")) {
                         setIgnore(true)
                     }
                 }

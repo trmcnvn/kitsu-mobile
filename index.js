@@ -3,7 +3,9 @@ import { Sentry } from 'react-native-sentry';
 import { registerScreens, Layouts, defaultOptions } from 'kitsu/navigation';
 import OneSignal from 'react-native-onesignal';
 
-Sentry.config('https://068b9ab849bf4485beb4884adcc5be83:8c57373b9bb4410f99ebfd17878c739a@sentry.io/200469');
+Sentry.config(
+  'https://068b9ab849bf4485beb4884adcc5be83:8c57373b9bb4410f99ebfd17878c739a@sentry.io/200469'
+);
 
 // Only enable sentry on production builds
 if (!__DEV__) {
@@ -11,6 +13,10 @@ if (!__DEV__) {
 }
 
 // Set notification display
+OneSignal.init('01f6e47a-6809-4118-a796-949952e9c209', {
+  kOSSettingsKeyInFocusDisplayOption: 0,
+  kOSSettingsKeyAutoPrompt: false
+});
 OneSignal.inFocusDisplaying(2);
 
 console.disableYellowBox = true;
@@ -28,4 +34,3 @@ Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions(defaultOptions);
   Navigation.setRoot(Layouts.INITIAL);
 });
-

@@ -37,13 +37,6 @@
   [ReactNativeNavigation bootstrap:jsCodeLocation launchOptions:launchOptions];
   [RNSentry installWithBridge:[ReactNativeNavigation getBridge]];
   [Fabric with:@[[Crashlytics class]]];
-  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
-                                                         appId:@"01f6e47a-6809-4118-a796-949952e9c209"
-                                                      settings:@{
-                                                        kOSSettingsKeyInFocusDisplayOption : @(OSNotificationDisplayTypeNone),
-                                                        // enable this to cancel auto prompt for permission
-                                                         kOSSettingsKeyAutoPrompt: @false
-                                                      }];
   [GADMobileAds configureWithApplicationID:@"ca-app-pub-1730996169473196~3598617596"];
   return YES;
 }
