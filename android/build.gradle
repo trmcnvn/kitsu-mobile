@@ -32,10 +32,19 @@ allprojects {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
+        maven {
+            // Local Maven repo containing AARs with JSC library built for Android
+            url "$rootDir/../node_modules/jsc-android/dist"
+        }
         maven { url "https://jitpack.io" } // jitpack repo is necessary to fetch ucrop dependency
 
         configurations.all {
             resolutionStrategy {
+                eachDependency { DependencyResolveDetails details ->
+                    if (details.requested.name == 'android-jsc') {
+                        details.useTarget group: details.requested.group, name: 'android-jsc-intl', version: 'r236355'
+                    }
+                }
                 force "com.facebook.android:facebook-android-sdk:4.28.0" // Temp fix for broken run-android (see goo.gl/v8u59r)
             }
         }
