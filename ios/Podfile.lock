@@ -1,24 +1,73 @@
 PODS:
+  - FLAnimatedImage (1.0.12)
   - Google-Mobile-Ads-SDK (7.31.0)
+  - libwebp (0.6.1):
+    - libwebp/core (= 0.6.1)
+    - libwebp/dec (= 0.6.1)
+    - libwebp/demux (= 0.6.1)
+    - libwebp/dsp (= 0.6.1)
+    - libwebp/enc (= 0.6.1)
+    - libwebp/mux (= 0.6.1)
+    - libwebp/utils (= 0.6.1)
+    - libwebp/webp (= 0.6.1)
+  - libwebp/core (0.6.1):
+    - libwebp/webp
+  - libwebp/dec (0.6.1):
+    - libwebp/core
+  - libwebp/demux (0.6.1):
+    - libwebp/core
+  - libwebp/dsp (0.6.1):
+    - libwebp/core
+  - libwebp/enc (0.6.1):
+    - libwebp/core
+  - libwebp/mux (0.6.1):
+    - libwebp/core
+  - libwebp/utils (0.6.1):
+    - libwebp/core
+  - libwebp/webp (0.6.1)
   - QBImagePickerController (3.4.0)
+  - react-native-fast-image (1.0.0-kitsu):
+    - FLAnimatedImage
+    - SDWebImage/Core
+    - SDWebImage/GIF
+    - SDWebImage/WebP
   - RSKImageCropper (2.1.0)
+  - SDWebImage/Core (4.4.3)
+  - SDWebImage/GIF (4.4.3):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - SDWebImage/WebP (4.4.3):
+    - libwebp (~> 0.5)
+    - SDWebImage/Core
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
   - QBImagePickerController
+  - react-native-fast-image (from `../node_modules/react-native-fast-image`)
   - RSKImageCropper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - FLAnimatedImage
     - Google-Mobile-Ads-SDK
+    - libwebp
     - QBImagePickerController
     - RSKImageCropper
+    - SDWebImage
+
+EXTERNAL SOURCES:
+  react-native-fast-image:
+    :path: "../node_modules/react-native-fast-image"
 
 SPEC CHECKSUMS:
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
+  libwebp: 0f01098c6c17175391af621b2f14150f3ca16e16
   QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
+  react-native-fast-image: 53fcccafc4c4ac19e05a33ed49b6c97914a0ee9b
   RSKImageCropper: 0d0c6d8525a2381f03fde32a47c6703817a2feed
+  SDWebImage: c5594f1a19c48d526d321e548902b56b479cd508
 
-PODFILE CHECKSUM: 6222dcecebf24dd37c94dbc5c92474a4142774a1
+PODFILE CHECKSUM: b663786819953c900f9688791d7927dfd42056c4
 
 COCOAPODS: 1.5.3

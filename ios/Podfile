@@ -9,6 +9,7 @@ target 'kitsu_mobile' do
   pod 'RSKImageCropper'
   pod 'QBImagePickerController'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'react-native-fast-image', path: '../node_modules/react-native-fast-image'
 end
 
 # Remove any React Dependencies so that we don't get clashes
